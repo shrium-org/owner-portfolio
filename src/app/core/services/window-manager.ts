@@ -8,10 +8,12 @@ export type WindowId =
   | 'photos'
   | 'terminal'
   | 'txtfile'
-  | 'imgfile';
+  | 'imgfile'
+  | 'settings';
 
 export interface WindowState {
   isOpen: boolean;
+  isMinimized: boolean;
   zIndex: number;
   data: any;
 }
@@ -19,14 +21,16 @@ export interface WindowState {
 const INITIAL_Z_INDEX = 1000;
 
 const createInitialState = (): Record<WindowId, WindowState> => ({
-  finder:   { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-  contact:  { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-  resume:   { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-  safari:   { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-  photos:   { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-  terminal: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-  txtfile:  { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-  imgfile:  { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+  finder:   { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  contact:  { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  resume:   { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  safari:   { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  photos:   { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  terminal: { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  txtfile:  { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  imgfile:  { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  settings: { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+
 });
 
 @Injectable({ providedIn: 'root' })
@@ -35,10 +39,10 @@ export class WindowManager {
 
   windows = signal<Record<WindowId, WindowState>>(createInitialState());
 
-  /** id of whichever open window currently has the highest z-index */
+  /** id of whichever open, non-minimized window currently has the highest z-index */
   focusedId = computed<WindowId | null>(() => {
     const open = (Object.entries(this.windows()) as [WindowId, WindowState][])
-      .filter(([, w]) => w.isOpen);
+      .filter(([, w]) => w.isOpen && !w.isMinimized);
 
     if (!open.length) return null;
 
@@ -49,6 +53,10 @@ export class WindowManager {
     return this.windows()[id].isOpen;
   }
 
+  isMinimized(id: WindowId): boolean {
+    return this.windows()[id].isMinimized;
+  }
+
   isFocused(id: WindowId): boolean {
     return this.focusedId() === id;
   }
@@ -57,23 +65,41 @@ export class WindowManager {
     this.topZIndex += 1;
     this.windows.update(state => ({
       ...state,
-      [id]: { ...state[id], isOpen: true, zIndex: this.topZIndex, data: data ?? state[id].data },
+      [id]: { ...state[id], isOpen: true, isMinimized: false, zIndex: this.topZIndex, data: data ?? state[id].data },
     }));
   }
 
   close(id: WindowId) {
     this.windows.update(state => ({
       ...state,
-      [id]: { ...state[id], isOpen: false },
+      [id]: { ...state[id], isOpen: false, isMinimized: false },
     }));
   }
 
   focus(id: WindowId) {
-    if (!this.isOpen(id)) return;
+    if (!this.isOpen(id) || this.isMinimized(id)) return;
     this.topZIndex += 1;
     this.windows.update(state => ({
       ...state,
       [id]: { ...state[id], zIndex: this.topZIndex },
+    }));
+  }
+
+  minimize(id: WindowId) {
+    if (!this.isOpen(id)) return;
+    this.windows.update(state => ({
+      ...state,
+      [id]: { ...state[id], isMinimized: true },
+    }));
+  }
+
+  /** restore from the dock/taskbar and bring to front */
+  restore(id: WindowId) {
+    if (!this.isOpen(id)) return;
+    this.topZIndex += 1;
+    this.windows.update(state => ({
+      ...state,
+      [id]: { ...state[id], isMinimized: false, zIndex: this.topZIndex },
     }));
   }
 
@@ -83,6 +109,11 @@ export class WindowManager {
 
     if (!win.isOpen) {
       this.open(id, data);
+      return;
+    }
+
+    if (win.isMinimized) {
+      this.restore(id);
       return;
     }
 

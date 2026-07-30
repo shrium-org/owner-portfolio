@@ -1,11 +1,46 @@
 <div class="desktop">
 
+  <!-- Wallpaper -->
+  <div
+    class="
+      fixed
+      inset-0
+      -z-20
+      overflow-hidden
+    "
+  >
+    <img
+      src="/images/wallpaper.png"
+      alt="Wallpaper"
+      class="
+        h-full
+        w-full
+        object-cover
+        select-none
+        pointer-events-none
+      "
+    />
+
+    <!-- macOS dark overlay -->
+    <div
+      class="
+        absolute
+        inset-0
+        bg-black/15
+      "
+    ></div>
+  </div>
+
   <app-navbar></app-navbar>
 
   <main>
     <app-finder-window></app-finder-window>
     <app-contact-window></app-contact-window>
     <app-terminal-window></app-terminal-window>
+    <app-safari-window></app-safari-window>
+    <app-resume-window></app-resume-window>
+    <app-settings-window></app-settings-window>
+    <app-photos-window></app-photos-window>
   </main>
 
   <app-dock></app-dock>
