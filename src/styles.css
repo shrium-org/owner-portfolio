@@ -1,3 +1,751 @@
-/* You can add global styles to this file, and also import other style files */
 
-@import 'tailwindcss';
+@import "tailwindcss";
+
+
+@theme {
+
+  /*=========================================================
+    COLORS
+  =========================================================*/
+
+  --color-accent: #0a84ff;
+  --color-accent-hover: #409cff;
+  --color-accent-pressed: #0060df;
+
+  --color-success: #30d158;
+  --color-warning: #ffd60a;
+  --color-danger: #ff453a;
+
+  /*=========================================================
+    DARK (Default)
+  =========================================================*/
+
+  --color-background: #1c1c1e;
+
+  --color-surface: #2c2c2e;
+  --color-surface-2: #363638;
+  --color-surface-3: #48484a;
+
+  --color-sidebar: #242426;
+  --color-toolbar: rgba(44, 44, 46, .78);
+
+  --color-glass:
+    rgba(255, 255, 255, .08);
+
+  --color-glass-heavy:
+    rgba(255, 255, 255, .14);
+
+  /*=========================================================
+    TEXT
+  =========================================================*/
+
+  --color-foreground: #f5f5f7;
+
+  --color-foreground-secondary:
+    rgba(245, 245, 247, .74);
+
+  --color-foreground-tertiary:
+    rgba(245, 245, 247, .48);
+
+  --color-foreground-disabled:
+    rgba(245, 245, 247, .25);
+
+  /*=========================================================
+    BORDERS
+  =========================================================*/
+
+  --color-border:
+    rgba(255, 255, 255, .08);
+
+  --color-border-strong:
+    rgba(255, 255, 255, .15);
+
+  /*=========================================================
+    SHADOWS
+  =========================================================*/
+
+  --shadow-xs:
+    0 1px 2px rgba(0, 0, 0, .15);
+
+  --shadow-sm:
+    0 2px 6px rgba(0, 0, 0, .18);
+
+  --shadow-md:
+    0 8px 20px rgba(0, 0, 0, .22);
+
+  --shadow-lg:
+    0 20px 40px rgba(0, 0, 0, .32);
+
+  --shadow-xl:
+    0 30px 80px rgba(0, 0, 0, .45);
+
+  --shadow-accent:
+    0 0 20px rgba(10, 132, 255, .22);
+
+  /*=========================================================
+    GLASS
+  =========================================================*/
+
+  --blur-sm: 12px;
+  --blur-md: 20px;
+  --blur-lg: 32px;
+
+  /*=========================================================
+    TYPOGRAPHY
+  =========================================================*/
+
+  --font-body:
+    Inter,
+    "SF Pro Text",
+    system-ui,
+    sans-serif;
+
+  --font-heading:
+    "SF Pro Display",
+    Inter,
+    system-ui,
+    sans-serif;
+
+  --text-xs: .75rem;
+  --text-sm: .875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.75rem;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  /*=========================================================
+    SPACING
+  =========================================================*/
+
+  --spacing-1: .25rem;
+  --spacing-2: .5rem;
+  --spacing-3: .75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+
+  /*=========================================================
+    RADIUS
+  =========================================================*/
+
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /*=========================================================
+    CONTROLS
+  =========================================================*/
+
+  --size-input: 36px;
+  --size-button: 34px;
+  --size-toolbar: 52px;
+  --size-titlebar: 30px;
+
+  /*=========================================================
+    ANIMATION
+  =========================================================*/
+
+  --duration-fast: 120ms;
+  --duration-normal: 220ms;
+  --duration-slow: 350ms;
+
+  --ease-default:
+    cubic-bezier(.25, .1, .25, 1);
+
+}
+
+
+@layer base {
+
+  /*=========================================================
+    RESET
+  =========================================================*/
+
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /*=========================================================
+    ROOT
+  =========================================================*/
+
+  html {
+
+    color-scheme: dark;
+
+    font-family: var(--font-body);
+
+    font-size: 16px;
+
+    line-height: var(--leading-normal);
+
+    scroll-behavior: smooth;
+
+    -webkit-font-smoothing: antialiased;
+
+    -moz-osx-font-smoothing: grayscale;
+
+    text-rendering: optimizeLegibility;
+
+  }
+
+  /*=========================================================
+    BODY
+  =========================================================*/
+
+  body {
+
+    min-height: 100vh;
+
+    background: var(--color-background);
+
+    color: var(--color-foreground);
+
+    font-size: var(--text-base);
+
+    overflow: hidden;
+
+  }
+
+  /*=========================================================
+    APP ROOT
+  =========================================================*/
+
+  #root,
+  app-root,
+  main {
+
+    width: 100dvw;
+
+    height: 100dvh;
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+  }
+
+  /*=========================================================
+    TYPOGRAPHY
+  =========================================================*/
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+
+    font-family: var(--font-heading);
+
+    color: var(--color-foreground);
+
+    font-weight: 600;
+
+    letter-spacing: -.03em;
+
+  }
+
+  h1 {
+
+    font-size: var(--text-4xl);
+
+    line-height: 1.05;
+
+  }
+
+  h2 {
+
+    font-size: var(--text-3xl);
+
+  }
+
+  h3 {
+
+    font-size: var(--text-2xl);
+
+  }
+
+  h4 {
+
+    font-size: var(--text-xl);
+
+  }
+
+  h5 {
+
+    font-size: var(--text-lg);
+
+  }
+
+  h6 {
+
+    font-size: var(--text-base);
+
+  }
+
+  p {
+
+    color: var(--color-foreground-secondary);
+
+    line-height: var(--leading-relaxed);
+
+  }
+
+  small {
+
+    font-size: var(--text-xs);
+
+    color: var(--color-foreground-tertiary);
+
+  }
+
+  strong {
+
+    color: var(--color-foreground);
+
+    font-weight: 600;
+
+  }
+
+  /*=========================================================
+    LINKS
+  =========================================================*/
+
+  a {
+
+    color: var(--color-accent);
+
+    text-decoration: none;
+
+    transition:
+      color var(--duration-fast) var(--ease-default);
+
+  }
+
+  a:hover {
+
+    color: var(--color-accent-hover);
+
+  }
+
+  /*=========================================================
+    MEDIA
+  =========================================================*/
+
+  img,
+  svg,
+  video,
+  canvas {
+
+    display: block;
+
+    max-width: 100%;
+
+  }
+
+  /*=========================================================
+    LISTS
+  =========================================================*/
+
+  ul,
+  ol {
+
+    list-style: none;
+
+  }
+
+  /*=========================================================
+    BUTTON RESET
+  =========================================================*/
+
+  button {
+
+    border: none;
+
+    background: transparent;
+
+    color: inherit;
+
+    font: inherit;
+
+    cursor: pointer;
+
+  }
+
+  button:disabled {
+
+    opacity: .45;
+
+    pointer-events: none;
+
+  }
+
+  /*=========================================================
+    INPUT RESET
+  =========================================================*/
+
+  input,
+  textarea,
+  select {
+
+    font: inherit;
+
+    color: inherit;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+  }
+
+  textarea {
+
+    resize: vertical;
+
+  }
+
+  /*=========================================================
+    FOCUS
+  =========================================================*/
+
+  :focus-visible {
+
+    outline: 2px solid var(--color-accent);
+
+    outline-offset: 2px;
+
+  }
+
+  /*=========================================================
+    SELECTION
+  =========================================================*/
+
+  ::selection {
+
+    background: rgba(10, 132, 255, .35);
+
+    color: white;
+
+  }
+
+  /*=========================================================
+    SCROLLBAR
+  =========================================================*/
+
+  ::-webkit-scrollbar {
+
+    width: 10px;
+
+    height: 10px;
+
+  }
+
+  ::-webkit-scrollbar-track {
+
+    background: transparent;
+
+  }
+
+  ::-webkit-scrollbar-thumb {
+
+    background: rgba(255, 255, 255, .18);
+
+    border-radius: 999px;
+
+    border: 2px solid transparent;
+
+    background-clip: content-box;
+
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+
+    background: rgba(255, 255, 255, .32);
+
+    border: 2px solid transparent;
+
+    background-clip: content-box;
+
+  }
+
+  /*=========================================================
+    HORIZONTAL RULE
+  =========================================================*/
+
+  hr {
+
+    border: 0;
+
+    height: 1px;
+
+    background: var(--color-border);
+
+  }
+
+  /*=========================================================
+    TABLES
+  =========================================================*/
+
+  table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+  }
+
+  th {
+
+    font-weight: 600;
+
+    color: var(--color-foreground);
+
+  }
+
+  td {
+
+    color: var(--color-foreground-secondary);
+
+  }
+
+}
+
+@layer utilities {
+
+  nav {
+
+    @apply fixed top-3 left-1/2 -translate-x-1/2
+    w-[calc(100%-24px)]
+    h-[var(--size-toolbar)]
+    px-4
+    flex items-center justify-between
+    z-50;
+
+
+    background:
+      var(--color-toolbar);
+
+
+    backdrop-filter:
+      blur(var(--blur-lg))
+      saturate(180%);
+
+
+    -webkit-backdrop-filter:
+      blur(var(--blur-lg))
+      saturate(180%);
+
+
+    @apply border rounded-xl;
+
+
+    border-color:
+      var(--color-border);
+
+
+    box-shadow:
+      var(--shadow-md);
+
+
+
+    .nav-left,
+    .nav-right {
+
+      @apply flex items-center;
+
+    }
+
+
+
+    .nav-left {
+
+      @apply gap-3;
+
+
+      img {
+
+        @apply w-7 h-7;
+
+      }
+
+
+
+      p {
+
+        @apply whitespace-nowrap font-semibold text-sm;
+
+        color:
+          var(--color-foreground);
+
+      }
+
+
+
+      ul {
+
+        @apply flex items-center gap-1 ml-5;
+
+
+        li {
+
+          @apply px-3 py-1 rounded-lg
+          text-sm cursor-pointer
+          transition-all duration-200;
+
+
+          color:
+            var(--color-foreground-secondary);
+
+
+
+          &:hover {
+
+            @apply bg-white/10;
+
+
+            color:
+              var(--color-foreground);
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+
+
+    .nav-right {
+
+      @apply gap-4;
+
+
+
+      ul {
+
+        @apply flex items-center gap-2;
+
+
+        li {
+
+          @apply w-8 h-8
+          flex items-center justify-center
+          rounded-lg cursor-pointer
+          transition-all duration-200;
+
+
+
+          &:hover {
+
+            @apply bg-white/10;
+
+          }
+
+
+
+          img {
+
+            @apply w-[18px] h-[18px];
+
+          }
+
+        }
+
+      }
+
+
+
+      time {
+
+        @apply text-sm;
+
+
+        color:
+          var(--color-foreground-secondary);
+
+
+        font-variant-numeric:
+          tabular-nums;
+
+      }
+
+    }
+
+  }
+
+}
+
+@layer utilities {
+  .desktop {
+    @apply relative w-dvw h-dvh overflow-hidden;
+    background: url('/images/wallpaper.png');
+    background-size: cover;
+    background-position: center;
+  }
+
+  app-navbar {
+    @apply absolute top-3 left-0 w-full z-50;
+  }
+
+  app-dock {
+    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50;
+  }
+
+  main {
+    @apply w-full h-full;
+  }
+
+  /* Dock Container */
+  .dock {
+    @apply flex items-end gap-2
+           px-4 py-2
+           rounded-2xl
+           bg-white/15
+           backdrop-blur-xl
+           border border-white/20
+           shadow-2xl;
+  }
+
+  /* Dock Item */
+  .dock-item {
+    @apply flex items-center justify-center
+           w-14 h-14
+           rounded-xl
+           transition-all duration-200
+           hover:scale-125
+           hover:-translate-y-2
+           active:scale-95;
+  }
+
+  .dock-item img {
+    @apply w-16 h-16 object-contain pointer-events-none;
+  }
+}
