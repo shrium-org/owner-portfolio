@@ -9,7 +9,9 @@ export type WindowId =
   | 'terminal'
   | 'txtfile'
   | 'imgfile'
-  | 'settings';
+  | 'settings'
+  | 'notepad'
+  ;
 
 export interface WindowState {
   isOpen: boolean;
@@ -30,6 +32,7 @@ const createInitialState = (): Record<WindowId, WindowState> => ({
   txtfile:  { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
   imgfile:  { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
   settings: { isOpen: false, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
+  notepad:  { isOpen: true, isMinimized: false, zIndex: INITIAL_Z_INDEX, data: null },
 
 });
 

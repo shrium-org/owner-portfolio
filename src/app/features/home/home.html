@@ -1,4 +1,15 @@
-<div class="desktop">
+<div
+  class="
+    desktop
+
+    relative
+
+    h-dvh
+    w-dvw
+
+    overflow-hidden
+  "
+>
 
   <!-- Wallpaper -->
   <div
@@ -10,7 +21,7 @@
     "
   >
     <img
-      src="/images/wallpaper.png"
+      [src]="appearance.wallpaper()"
       alt="Wallpaper"
       class="
         h-full
@@ -31,7 +42,15 @@
     ></div>
   </div>
 
-  <app-navbar></app-navbar>
+  <app-navbar
+    class="
+      absolute
+      top-3
+      left-0
+      w-full
+      z-50
+    "
+  ></app-navbar>
 
   <main>
     <app-finder-window></app-finder-window>
@@ -41,8 +60,12 @@
     <app-resume-window></app-resume-window>
     <app-settings-window></app-settings-window>
     <app-photos-window></app-photos-window>
+    <app-notepad-window></app-notepad-window>
   </main>
 
-  <app-dock></app-dock>
+
+  <app-dock
+
+  ></app-dock>
 
 </div>

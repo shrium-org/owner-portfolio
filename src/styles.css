@@ -649,21 +649,3 @@
 
 }
 
-
-
-@layer utilities {
-
-
-  app-navbar {
-    @apply absolute top-3 left-0 w-full z-50;
-  }
-
-  app-dock {
-    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50;
-  }
-
-  main {
-    @apply w-full h-full;
-  }
-
-}

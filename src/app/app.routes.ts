@@ -6,6 +6,7 @@ export const routes: Routes = [
 
     {
         path: '',
+        title: 'Shrium | Owner Portfolio',
         component: Home
     }
 
